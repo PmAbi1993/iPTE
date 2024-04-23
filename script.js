@@ -91,8 +91,8 @@ function fetchAndSelectSentence() {
   fetch('data.json')
     .then(response => response.json())
     .then(data => {
-      const easySentences = data.easy;
-      selectedSentence = easySentences[Math.floor(Math.random() * easySentences.length)];
+      const allSentences = [...data.easy, ...data.medium, ...data.hard];
+      selectedSentence = allSentences[Math.floor(Math.random() * allSentences.length)];
       speakText(selectedSentence); // Speak the selected sentence
       console.log("Selected sentence:", selectedSentence);
     })
