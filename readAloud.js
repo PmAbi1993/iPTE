@@ -36,6 +36,8 @@ function initRecognition() {
     console.log("Recording stopped");
     // Remove "recording" class from the record button
     document.getElementById('recordButton').classList.remove('recording');
+    let value = calculateAccuracy(selectedSentence, document.getElementById('textarea').value);
+    setAccuracyValue(value);
   };
 
   recognition.onresult = function(event) {
@@ -85,6 +87,7 @@ function toggleRecording() {
 
 function fetchAndSelectSentence() {
   // Fetch the JSON file and select a random sentence from the "easy" key
+  resetAll();
   fetch('data.json')
     .then(response => response.json())
     .then(data => {
@@ -111,3 +114,45 @@ function initReadAloud() {
 document.addEventListener("DOMContentLoaded", function() {
   initReadAloud();
 });
+
+function setAccuracyValue(value) {
+  console.log("selected sentence:", selectedSentence);
+  console.log("Accuracy:", value);
+  const accuracyValueDiv = document.getElementById('accuracy-value');
+  accuracyValueDiv.textContent = value;
+}
+
+function resetAll() {
+  resetAccuracy();
+  clearTextarea();
+}
+function clearTextarea() {
+  document.getElementById('textarea').value = '';
+}
+function resetAccuracy() {
+  setAccuracyValue('0.00');
+  document.getElementById('textarea').value = '';
+}
+
+function calculateAccuracy(selectedSentence, spokenSentence) {
+  // Step 1: Get all words from the selected sentence and store in the variable selectedSentence with lowercase
+  const selectedWords = selectedSentence.toLowerCase().split(/\s+/);
+  
+  // Step 2: Get all words from the textArea and store in the variable spokenSentence with lower case
+  const spokenWords = spokenSentence.toLowerCase().split(/\s+/);
+  
+  // Step 3: Filter both selectedSentence and spokenSentence of [“,”, “.”]
+  const filteredSelectedWords = selectedWords.map(word => word.replace(/[,.]/g, ''));
+  const filteredSpokenWords = spokenWords.map(word => word.replace(/[,.]/g, ''));
+  
+  // Step 4: calculate accuracy of spokenSentence with regards to selectedSentence
+  let correctCount = 0;
+  for (let i = 0; i < Math.min(filteredSelectedWords.length, filteredSpokenWords.length); i++) {
+      if (filteredSelectedWords[i] === filteredSpokenWords[i]) {
+          correctCount++;
+      }
+  }
+  
+  const accuracy = (correctCount / filteredSelectedWords.length) * 100;
+  return accuracy.toFixed(2);
+}
