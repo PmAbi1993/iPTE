@@ -5,8 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <!-- <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
-  <!-- <meta name="generator" content="Hugo 0.122.0"> -->
   <title>PTE Helper</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,16 +13,34 @@
     .center-container {
       display: flex;
       justify-content: center;
-      /* align-items: center; */
-      height: 100vh;
       padding-top: 40px; /* Adjust the top padding as needed */
     }
-    
-    /* CSS for the "recording" class */
-    .recording {
-      background-color: red !important;
+  
+    .accuracy-container {
+      border-radius: 50%; /* Make it circular */
+      padding: 20px; /* Adjust padding as needed */
+      border: 2px solid black; /* Add border */
+      width: 90px; /* Make the width and height equal */
+      height: 90px; /* Make the width and height equal */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .accuracy-text p,
+    .accuracy-value p {
+      margin-bottom: 0; /* Remove default margin from <p> elements */
+    }
+  
+    .accuracy-text {
+      font-size: 16px; /* Adjust the font size as needed */
+    }
+  
+    .accuracy-value {
+      font-size: 14px; /* Adjust the font size as needed */
     }
   </style>
+  
 </head>
 <body>
   <header>
@@ -36,6 +52,23 @@
       </div>
     </div>
   </header>
+
+  <div class="container-fluid">
+    <div class="row justify-content-end mt-3">
+      <div class="col-auto">
+        <div class="accuracy-container">
+          <div class="text-center">
+            <div class="accuracy-text">
+              <p>Accuracy</p>
+            </div>
+            <div class="accuracy-value">
+              <p>0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="center-container">
     <div class="container">
