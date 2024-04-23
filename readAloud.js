@@ -1,0 +1,98 @@
+// readAloud.js
+
+let recognition;
+let isRecording = false;
+
+function speakText(text) {
+  const speechSynthesis = window.speechSynthesis;
+  if (!speechSynthesis) {
+    console.error("Speech synthesis not supported");
+    return;
+  }
+
+  // Cancel any previous speech
+  speechSynthesis.cancel();
+
+  // Create a new speech utterance
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  // Speak the text
+  speechSynthesis.speak(utterance);
+}
+
+function initRecognition() {
+  recognition = new webkitSpeechRecognition(); // Create speech recognition object
+  recognition.continuous = true; // Enable continuous speech recognition
+  recognition.interimResults = true; // Enable interim results
+
+  recognition.onstart = function() {
+    console.log("Recording started");
+    // Add "recording" class to the record button
+    document.getElementById('recordButton').classList.add('recording');
+  };
+
+  recognition.onend = function() {
+    console.log("Recording stopped");
+    // Remove "recording" class from the record button
+    document.getElementById('recordButton').classList.remove('recording');
+  };
+
+  recognition.onresult = function(event) {
+    let interimTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        appendText(event.results[i][0].transcript);
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    console.log("Interim transcript:", interimTranscript);
+  };
+
+  recognition.onerror = function(event) {
+    console.error("Speech recognition error:", event.error);
+  };
+}
+
+function startRecording() {
+  if (!recognition) {
+    initRecognition();
+  }
+  recognition.start();
+  isRecording = true;
+}
+
+function stopRecording() {
+  if (recognition && isRecording) {
+    recognition.stop();
+    isRecording = false;
+  }
+}
+
+function appendText(text) {
+  const textarea = document.querySelector('#textarea');
+  textarea.value += text + ' ';
+}
+
+function toggleRecording() {
+  if (isRecording) {
+    stopRecording();
+  } else {
+    startRecording();
+  }
+}
+
+function initReadAloud() {
+  // Speak a welcome message once the page is loaded
+  speakText("Welcome to PTE Mocks Helper");
+
+  // Add event listener to the record button
+  const recordButton = document.getElementById('recordButton');
+  recordButton.addEventListener('click', toggleRecording);
+
+  console.log("Read Aloud initialized");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  initReadAloud();
+});

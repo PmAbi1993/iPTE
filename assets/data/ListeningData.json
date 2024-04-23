@@ -1,0 +1,36 @@
+{
+    "easy": [
+        "This is a sample sentence.",
+        "Another example sentence here.",
+        "One more sentence for testing.",
+        "New sentence with five words.",
+        "Here is another five-word sentence.",
+        "Adding more sentences for testing.",
+        "Five words in this sentence.",
+        "This is a new five-word sentence.",
+        "Testing with five-word sentences.",
+        "Another example of five words.",
+        "Adding more five-word sentences.",
+        "This sentence has five words.",
+        "Five-word sentence for testing.",
+        "Here is a five-word sentence.",
+        "Testing five-word sentences.",
+        "This is another five-word sentence.",
+        "Adding more five-word sentences here.",
+        "Five words in this new sentence.",
+        "This is a five-word sentence for testing.",
+        "Another five-word sentence to add."
+    ],
+    "medium": [
+        "This sentence has six words in it.",
+        "Adding a medium sentence with seven words.",
+        "Here is a new medium sentence with six words.",
+        "Testing medium sentences with six or seven words.",
+        "Another example of a medium sentence with seven words.",
+        "This is a medium sentence with six words.",
+        "Adding more medium sentences for testing.",
+        "Six words in this medium sentence.",
+        "This is a new medium sentence with seven words.",
+        "Testing with medium sentences containing six or seven words."
+    ]
+}
