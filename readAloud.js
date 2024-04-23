@@ -2,6 +2,7 @@
 
 let recognition;
 let isRecording = false;
+let selectedSentence = '';
 
 function speakText(text) {
   const speechSynthesis = window.speechSynthesis;
@@ -82,6 +83,19 @@ function toggleRecording() {
   }
 }
 
+function fetchAndSelectSentence() {
+  // Fetch the JSON file and select a random sentence from the "easy" key
+  fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+      const easySentences = data.easy;
+      selectedSentence = easySentences[Math.floor(Math.random() * easySentences.length)];
+      speakText(selectedSentence); // Speak the selected sentence
+      console.log("Selected sentence:", selectedSentence);
+    })
+    .catch(error => console.error('Error fetching data.json:', error));
+}
+
 function initReadAloud() {
   // Speak a welcome message once the page is loaded
   speakText("Welcome to PTE Mocks Helper");
@@ -89,6 +103,10 @@ function initReadAloud() {
   // Add event listener to the record button
   const recordButton = document.getElementById('recordButton');
   recordButton.addEventListener('click', toggleRecording);
+
+  // Add event listener to the play button to fetch and speak a sentence
+  const playButton = document.getElementById('playButton');
+  playButton.addEventListener('click', fetchAndSelectSentence);
 
   console.log("Read Aloud initialized");
 }
