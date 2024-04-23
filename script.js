@@ -91,8 +91,8 @@ function fetchAndSelectSentence() {
   fetch('data.json')
     .then(response => response.json())
     .then(data => {
-      const easySentences = data.easy;
-      selectedSentence = easySentences[Math.floor(Math.random() * easySentences.length)];
+      const allSentences = [...data.easy, ...data.medium, ...data.hard];
+      selectedSentence = allSentences[Math.floor(Math.random() * allSentences.length)];
       speakText(selectedSentence); // Speak the selected sentence
       console.log("Selected sentence:", selectedSentence);
     })
@@ -107,6 +107,9 @@ function initReadAloud() {
   // Add event listener to the play button to fetch and speak a sentence
   const playButton = document.getElementById('playButton');
   playButton.addEventListener('click', fetchAndSelectSentence);
+
+  const submitButton = document.getElementById('sendButton');
+  submitButton.addEventListener('click', updateAccuracy);
 
   console.log("Read Aloud initialized");
 }
@@ -132,6 +135,11 @@ function clearTextarea() {
 function resetAccuracy() {
   setAccuracyValue('0.00');
   document.getElementById('textarea').value = '';
+}
+
+function updateAccuracy() {
+  let value = calculateAccuracy(selectedSentence, document.getElementById('textarea').value);
+  setAccuracyValue(value);
 }
 
 function calculateAccuracy(selectedSentence, spokenSentence) {

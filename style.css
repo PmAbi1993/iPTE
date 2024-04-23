@@ -1,0 +1,29 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px; /* Adjust the top padding as needed */
+  }
+
+  .accuracy-container {
+    border-radius: 50%; /* Make it circular */
+    padding: 20px; /* Adjust padding as needed */
+    border: 2px solid black; /* Add border */
+    width: 90px; /* Make the width and height equal */
+    height: 90px; /* Make the width and height equal */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .accuracy-text p,
+  .accuracy-value p {
+    margin-bottom: 0; /* Remove default margin from <p> elements */
+  }
+
+  .accuracy-text {
+    font-size: 16px; /* Adjust the font size as needed */
+  }
+
+  .accuracy-value {
+    font-size: 14px; /* Adjust the font size as needed */
+  }
