@@ -108,6 +108,9 @@ function initReadAloud() {
   const playButton = document.getElementById('playButton');
   playButton.addEventListener('click', fetchAndSelectSentence);
 
+  const submitButton = document.getElementById('sendButton');
+  submitButton.addEventListener('click', updateAccuracy);
+
   console.log("Read Aloud initialized");
 }
 
@@ -132,6 +135,11 @@ function clearTextarea() {
 function resetAccuracy() {
   setAccuracyValue('0.00');
   document.getElementById('textarea').value = '';
+}
+
+function updateAccuracy() {
+  let value = calculateAccuracy(selectedSentence, document.getElementById('textarea').value);
+  setAccuracyValue(value);
 }
 
 function calculateAccuracy(selectedSentence, spokenSentence) {
