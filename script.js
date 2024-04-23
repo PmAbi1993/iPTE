@@ -163,7 +163,7 @@ function calculateAccuracy(selectedSentence, spokenSentence) {
   // Avoid division by zero and consider the greater length for normalization
   const maxLength = Math.max(filteredSelectedWords.length, filteredSpokenWords.length);
   if (maxLength === 0) {
-    return "100.00"; // or appropriate handling for cases with no words
+    return "0"; // or appropriate handling for cases with no words
   }
 
   const accuracy = (correctCount / maxLength) * 100;
