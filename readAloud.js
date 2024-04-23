@@ -98,7 +98,7 @@ function fetchAndSelectSentence() {
 
 function initReadAloud() {
   // Speak a welcome message once the page is loaded
-  speakText("Welcome to PTE Mocks Helper");
+  // speakText("Welcome to PTE Mocks Helper");
 
   // Add event listener to the record button
   const recordButton = document.getElementById('recordButton');
