@@ -27,3 +27,7 @@
   .accuracy-value {
     font-size: 14px; /* Adjust the font size as needed */
   }
+
+  .recording {
+    background-color: red !important;
+  }
