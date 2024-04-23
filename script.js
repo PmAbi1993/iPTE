@@ -143,24 +143,29 @@ function updateAccuracy() {
 }
 
 function calculateAccuracy(selectedSentence, spokenSentence) {
-  // Step 1: Get all words from the selected sentence and store in the variable selectedSentence with lowercase
-  const selectedWords = selectedSentence.toLowerCase().split(/\s+/);
-  
-  // Step 2: Get all words from the textArea and store in the variable spokenSentence with lower case
-  const spokenWords = spokenSentence.toLowerCase().split(/\s+/);
-  
-  // Step 3: Filter both selectedSentence and spokenSentence of [“,”, “.”]
-  const filteredSelectedWords = selectedWords.map(word => word.replace(/[,.]/g, ''));
-  const filteredSpokenWords = spokenWords.map(word => word.replace(/[,.]/g, ''));
-  
-  // Step 4: calculate accuracy of spokenSentence with regards to selectedSentence
+  // Step 1: Convert to lowercase and split into words
+  const selectedWords = selectedSentence.toLowerCase().split(/\s+/).filter(Boolean);
+  const spokenWords = spokenSentence.toLowerCase().split(/\s+/).filter(Boolean);
+
+  // Step 2: Remove punctuation from words
+  const punctuation = /[,.?!;:]/g;
+  const filteredSelectedWords = selectedWords.map(word => word.replace(punctuation, ''));
+  const filteredSpokenWords = spokenWords.map(word => word.replace(punctuation, ''));
+
+  // Step 3: Calculate accuracy
   let correctCount = 0;
-  for (let i = 0; i < Math.min(filteredSelectedWords.length, filteredSpokenWords.length); i++) {
-      if (filteredSelectedWords[i] === filteredSpokenWords[i]) {
-          correctCount++;
-      }
+  filteredSpokenWords.forEach((word, index) => {
+    if (word === filteredSelectedWords[index]) {
+      correctCount++;
+    }
+  });
+
+  // Avoid division by zero and consider the greater length for normalization
+  const maxLength = Math.max(filteredSelectedWords.length, filteredSpokenWords.length);
+  if (maxLength === 0) {
+    return "100.00"; // or appropriate handling for cases with no words
   }
-  
-  const accuracy = (correctCount / filteredSelectedWords.length) * 100;
+
+  const accuracy = (correctCount / maxLength) * 100;
   return accuracy.toFixed(2);
 }
