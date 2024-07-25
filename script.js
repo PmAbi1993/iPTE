@@ -94,9 +94,20 @@ function fetchAndSelectSentence() {
       const allSentences = [...data.easy, ...data.medium, ...data.hard];
       selectedSentence = allSentences[Math.floor(Math.random() * allSentences.length)];
       speakText(selectedSentence); // Speak the selected sentence
+      displayCurrentText(selectedSentence); // Display the current text
       console.log("Selected sentence:", selectedSentence);
     })
     .catch(error => console.error('Error fetching data.json:', error));
+}
+
+function displayCurrentText(text) {
+  const currentTextElement = document.getElementById('currentText');
+  if (currentTextElement) {
+    currentTextElement.textContent = text;
+    // document.getElementById('currentTextContainer').style.display = 'block';
+  } else {
+    console.error('Current text element not found in the DOM');
+  }
 }
 
 function initReadAloud() {
@@ -116,6 +127,17 @@ function initReadAloud() {
 
 document.addEventListener("DOMContentLoaded", function() {
   initReadAloud();
+  const toggleButton = document.getElementById('toggleButton');
+  toggleButton.addEventListener('click', toggleTextVisibility);
+  
+  // Set initial state to hidden
+  const currentTextContainer = document.getElementById('currentTextContainer');
+  currentTextContainer.style.display = 'none';
+
+  // Set initial icon to eye-slash
+  const toggleButtonIcon = document.querySelector('#toggleButton i');
+  toggleButtonIcon.classList.remove('bi-eye-fill');
+  toggleButtonIcon.classList.add('bi-eye-slash-fill');
 });
 
 function setAccuracyValue(value) {
@@ -128,13 +150,24 @@ function setAccuracyValue(value) {
 function resetAll() {
   resetAccuracy();
   clearTextarea();
+  clearCurrentText();
 }
+
 function clearTextarea() {
   document.getElementById('textarea').value = '';
 }
+
 function resetAccuracy() {
   setAccuracyValue('0.00');
   document.getElementById('textarea').value = '';
+}
+
+function clearCurrentText() {
+  const currentTextElement = document.getElementById('currentText');
+  if (currentTextElement) {
+    currentTextElement.textContent = '';
+    document.getElementById('currentTextContainer').style.display = 'none';
+  }
 }
 
 function updateAccuracy() {
@@ -168,4 +201,19 @@ function calculateAccuracy(selectedSentence, spokenSentence) {
 
   const accuracy = (correctCount / maxLength) * 100;
   return accuracy.toFixed(2);
+}
+
+function toggleTextVisibility() {
+  const currentTextContainer = document.getElementById('currentTextContainer');
+  const toggleButtonIcon = document.querySelector('#toggleButton i');
+  
+  if (currentTextContainer.style.display === 'none') {
+    currentTextContainer.style.display = 'block';
+    toggleButtonIcon.classList.remove('bi-eye-slash-fill');
+    toggleButtonIcon.classList.add('bi-eye-fill');
+  } else {
+    currentTextContainer.style.display = 'none';
+    toggleButtonIcon.classList.remove('bi-eye-fill');
+    toggleButtonIcon.classList.add('bi-eye-slash-fill');
+  }
 }
